@@ -1,5 +1,4 @@
 import { Cloud, Earth, Folders, QrCode, Users } from 'lucide-react'
-import React from 'react'
 
 const Scale = () => {
   return (

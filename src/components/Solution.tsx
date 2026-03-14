@@ -1,5 +1,4 @@
 import { Calendar, ChartColumnBig, CheckCircle2Icon, Folders, Gift, Smartphone } from 'lucide-react'
-import React from 'react'
 
 const Solution = () => {
   return (

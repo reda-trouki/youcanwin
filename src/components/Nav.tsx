@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronRight, Trophy, X, Menu } from 'lucide-react'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false)

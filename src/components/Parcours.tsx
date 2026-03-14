@@ -1,5 +1,4 @@
 import { Blocks, Folders, Gift, QrCode, ShoppingCart } from 'lucide-react'
-import React from 'react'
 
 const Parcours = () => {
   return (

@@ -1,5 +1,4 @@
 import { ChartSpline, Star, Target, Users } from 'lucide-react'
-import React from 'react'
 
 const Stats = () => {
   return (

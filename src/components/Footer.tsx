@@ -1,5 +1,4 @@
-import { Facebook, Instagram, Linkedin, ShieldCheck, Trophy, Twitter, X } from 'lucide-react'
-import React from 'react'
+import { Facebook, Instagram, Linkedin, ShieldCheck, Trophy, X } from 'lucide-react'
 
 const Footer = () => {
   return (

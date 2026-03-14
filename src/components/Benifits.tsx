@@ -1,5 +1,4 @@
 import { Eclipse, Heart, Zap } from 'lucide-react'
-import React from 'react'
 
 const Benifits = () => {
   return (

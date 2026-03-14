@@ -1,5 +1,4 @@
 import { Bell, ChartColumnBig, ChevronRight, CloudDownload, Folders, Gift, QrCode, Settings, SlidersVertical, UsersRound } from 'lucide-react'
-import React from 'react'
 
 const Backoffice = () => {
   return (

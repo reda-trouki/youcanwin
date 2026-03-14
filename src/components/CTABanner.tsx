@@ -1,5 +1,4 @@
 import { Calendar, Mail } from 'lucide-react'
-import React from 'react'
 
 const CTABanner = () => {
   return (
