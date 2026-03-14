@@ -1,0 +1,952 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+    --color-green:        #0B6B3A;
+    --color-green-light:  #e8f5ee;
+    --color-green-badge:  #d1fae5;
+    --color-red:          #c0392b;
+    --color-dark:         #0F172A;
+    --color-gray-text:    #6b7280;
+    --color-bg-light:     #f6f9f6;
+    --color-border:       #e5e7eb;
+    --font-sans:          "Poppins", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  background-color: white;
+  color: #0d1f2d;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* ── Custom utilities ── */
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
+
+@utility col-center {
+  @apply flex flex-col justify-center items-center;
+}
+
+@utility abs-center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+@utility section-badge {
+  @apply w-fit inline-flex items-center gap-1.5 bg-green-badge text-green
+           text-sm font-semibold px-3.5 py-1.5 rounded-full;
+}
+
+@utility icon-box {
+  @apply w-12 h-12 rounded-xl bg-[#F0FDF4] text-green
+           flex-center text-xl shrink-0;
+}
+
+@utility btn-green {
+  @apply inline-flex items-center gap-2 bg-green text-white
+           font-thin text-sm px-6 py-3 rounded-[10px] border-none
+           cursor-pointer no-underline
+           hover:bg-[#155f30] hover:-translate-y-px transition-all;
+
+           &.ctn{
+            @apply w-full sm:w-72 flex justify-center items-center text-lg
+           }
+}
+
+@utility btn-red {
+  @apply inline-flex items-center gap-2 bg-red text-white
+           font-thin text-lg px-6 py-3 rounded-[10px] border-none
+           cursor-pointer no-underline hover:bg-[#a93226] transition-colors;
+}
+
+@utility btn-outline {
+  @apply inline-flex items-center gap-2 bg-transparent text-dark
+           font-semibold text-sm px-6 py-2.75 rounded-[10px]
+           border-[1.5px] border-gray-400 cursor-pointer no-underline
+           hover:border-green hover:text-green transition-colors;
+
+           &.ctn{
+            @apply w-full sm:w-72 flex justify-center items-center text-lg
+           }
+}
+
+@utility btn-white {
+  @apply inline-flex items-center gap-2 bg-white text-red
+           font-semibold text-base px-7 py-3.5 rounded-[10px] border-none
+           cursor-pointer no-underline hover:bg-gray-50 transition-colors;
+}
+
+@utility btn-outline-white {
+  @apply inline-flex items-center gap-2 bg-white/10 text-white
+           font-semibold text-base px-7 py-3.5 rounded-[10px]
+           border-[1.5px] border-white/40 cursor-pointer no-underline
+           hover:bg-white/20 transition-colors;
+}
+
+/* ── Animations ── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  main {
+    @apply w-full overflow-x-hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    @apply fixed top-0 left-0 right-0 z-50
+               bg-white/95 backdrop-blur-md
+               border-b border-border;
+ 
+    .nav-inner {
+      @apply flex items-center justify-between
+                   py-3.5 px-4 max-w-350 mx-auto;
+    }
+ 
+    .logo {
+      @apply flex items-center gap-2.5 no-underline;
+ 
+      .logo-icon {
+        @apply w-9 h-9 bg-green rounded-lg flex-center text-lg shrink-0;
+      }
+ 
+      .logo-text {
+        @apply text-xl font-extrabold text-dark;
+ 
+        em {
+          @apply text-red not-italic;
+        }
+      }
+ 
+      .logo-tag {
+        @apply text-[.50rem] font-bold tracking-[.12em]
+                       uppercase text-green bg-green-100 px-2 py-1 rounded-full;
+      }
+    }
+ 
+    /* Desktop links — hidden below lg */
+    ul {
+      @apply hidden lg:flex items-center gap-6 xl:gap-8 list-none;
+ 
+      a {
+        @apply text-sm font-medium text-dark no-underline
+                       hover:text-green transition-colors;
+      }
+    }
+ 
+    .nav-cta {
+      @apply btn-green text-[.88rem] py-2.5 px-4 lg:px-5;
+    }
+ 
+    /* Hamburger button — visible below lg */
+    .nav-hamburger {
+      @apply flex lg:hidden items-center justify-center
+             w-10 h-10 rounded-lg text-dark
+             hover:bg-gray-100 transition-colors cursor-pointer
+             border-none bg-transparent;
+    }
+  }
+ 
+  /* ─── MOBILE DRAWER ─── */
+  .nav-overlay {
+    @apply fixed inset-0 z-60 bg-dark/40 backdrop-blur-sm
+           lg:hidden;
+  }
+ 
+  .nav-drawer {
+    @apply fixed top-0 right-0 z-70 h-full w-72 pb-10
+           bg-white shadow-2xl flex flex-col
+           transition-transform duration-300 ease-in-out
+           translate-x-full
+           lg:hidden;
+ 
+    &.open {
+      @apply translate-x-0;
+    }
+ 
+    .nav-drawer-header {
+      @apply flex items-center justify-between
+             px-5 py-4 border-b border-border;
+    }
+ 
+    .nav-drawer-close {
+      @apply w-9 h-9 rounded-lg flex-center
+             text-dark bg-transparent border-none
+             hover:bg-gray-100 transition-colors cursor-pointer;
+    }
+ 
+    .nav-drawer-links {
+      @apply flex flex-col list-none px-4 py-4 gap-1 flex-1;
+ 
+      li a {
+        @apply flex items-center px-3 py-3 rounded-xl
+               text-[.95rem] font-medium text-dark no-underline
+               hover:bg-green-light hover:text-green transition-colors;
+      }
+    }
+ 
+    .nav-drawer-cta {
+      @apply px-5 py-5 border-t border-border;
+ 
+      a {
+        @apply text-sm py-3;
+      }
+    }
+  }
+ 
+
+  /* ─── HERO ─── */
+  .hero-section {
+    @apply py-0 sm:py-24 bg-linear-to-b from-bg-light to-[#FFFFFF];
+  }
+
+  #hero {
+    @apply min-h-dvh 
+               grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-20
+               pt-24 pb-16 px-4 sm:px-6
+               max-w-350 mx-auto;
+
+    .hero-left {
+      @apply flex flex-col gap-5 lg:gap-7 order-2 lg:order-1;
+
+      h1 {
+        @apply text-[clamp(2rem,6vw,3.9rem)] font-bold
+                       leading-[1.1] text-dark;
+        animation: fadeUp 0.6s ease both;
+
+        span {
+          @apply text-green relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 10px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M0,8 Q50,0 100,6 Q150,12 200,4' stroke='%231a7a3c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center bottom;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
+      .hero-desc {
+        @apply text-[1.1rem] lg:text-[1.3rem] text-gray-text leading-[1.7] max-w-120;
+        animation: fadeUp 0.6s 0.1s ease both;
+
+        strong {
+          @apply text-dark;
+        }
+      }
+
+      .hero-cta-group {
+        @apply flex gap-3 flex-wrap;
+        animation: fadeUp 0.6s 0.2s ease both;
+      }
+
+      .hero-stats {
+        @apply max-w-130 flex justify-between gap-4;
+
+        .hero-stat {
+          strong {
+            @apply block text-[1.8rem] sm:text-[2.4rem] font-bold text-green leading-none;
+          }
+          span {
+            @apply text-sm text-[##475569];
+          }
+        }
+      }
+
+      .hero-trust {
+        @apply pt-5 border-t border-border;
+        animation: fadeUp 0.6s 0.3s ease both;
+
+        .hero-trust-label {
+          @apply text-[.7rem] uppercase tracking-widest
+                           text-gray-400 font-bold mb-2.5;
+        }
+
+        .trust-logos {
+          @apply flex gap-4 sm:gap-6 flex-wrap items-center;
+
+          span {
+            @apply text-sm text-gray-400 font-medium;
+          }
+        }
+      }
+    }
+
+    .hero-right {
+      @apply relative flex justify-center order-1 lg:order-2;
+      animation: fadeUp 0.7s 0.15s ease both;
+
+      .phone-wrap {
+        @apply relative;
+      }
+
+      /* Phone */
+      .phone {
+        @apply w-64 sm:w-80 lg:w-120 h-auto min-h-[420px] sm:min-h-[560px] lg:h-175
+               rounded-[36px] border-[6px] lg:border-10 border-dark
+               overflow-hidden shadow-lg bg-white;
+
+        .phone-header {
+          @apply bg-green px-3.5 lg:px-4.5 pt-4 lg:pt-5 pb-3 lg:pb-4;
+
+          .album-label {
+            @apply text-[.65rem] uppercase tracking-[.12em]
+                               text-white/70 mb-1;
+          }
+
+          h3 {
+            @apply text-[1rem] lg:text-[1.2rem] font-extrabold text-white mb-3;
+          }
+
+          .phone-stats {
+            @apply flex gap-4 lg:gap-5;
+
+            .phone-stat {
+              strong {
+                @apply block text-xl lg:text-2xl font-black text-white leading-none;
+              }
+              p {
+                @apply text-[.65rem] text-white/70 mt-0.5;
+              }
+            }
+          }
+          .bottom-tabs {
+            @apply flex gap-3 ml-auto;
+
+            .tab-item {
+              @apply flex flex-col items-center gap-0.5;
+
+              .tab-icon {
+                @apply w-6 h-5 bg-border rounded;
+              }
+              .tab-label {
+                @apply text-[.55rem] text-gray-text;
+              }
+            }
+          }
+        }
+
+        .phone-grid {
+          @apply grid grid-cols-3 gap-2 p-3 bg-white;
+
+          .phone-card {
+            @apply aspect-square bg-[#e8edf2] rounded-[10px];
+
+            &.filled {
+              @apply bg-[#dde4ec];
+            }
+          }
+        }
+
+        /* ── Bottom tab bar ── */
+        .bottom-tabs {
+          @apply absolute bottom-0 right-0 left-0 flex justify-between items-center
+                 px-3 lg:px-4 py-2.5 lg:py-3 bg-white
+                 border-t border-border;
+
+          .tab-item {
+            @apply flex flex-col items-center gap-1 cursor-pointer;
+
+            .tab-icon {
+              @apply w-6 lg:w-7 h-6 lg:h-7 rounded-lg flex-center
+                     text-gray-text text-sm
+                     bg-green-light hover:text-green
+                     transition-colors duration-150;
+            }
+
+            .tab-label {
+              @apply text-[.55rem] lg:text-[.60rem] text-gray-text font-semibold
+                     tracking-wide uppercase
+                     hover:text-green transition-colors duration-150;
+            }
+          }
+        }
+      }
+
+      /* Floating QR badge — hidden on small screens */
+      .qr-badge {
+        @apply absolute top-4 -right-2 lg:-right-15
+                       bg-white rounded-2xl shadow-xl
+                       px-3.5 py-2.5 sm:flex items-center gap-2.5
+                       border border-border;
+
+        .qr-badge-icon {
+          @apply w-4 h-4 sm:w-9 sm:h-9 bg-green-light rounded-lg
+                           flex-center text-green text-base;
+        }
+
+        p:first-child {
+          @apply text-[.6rem] sm:text-sm font-bold text-dark;
+        }
+        p:last-child {
+          @apply text-[.5rem] sm:text-[.7rem] text-gray-text;
+        }
+      }
+
+      /* Bottom bar — hidden on small screens */
+      .phone-bottom-bar {
+        @apply absolute -bottom-2 left-4 -translate-x-1/2
+                       bg-white rounded-2xl shadow-xl
+                       px-4 py-4 sm:flex items-center gap-4
+                       min-w-18 border border-border;
+
+        .reward-item {
+          @apply flex items-center gap-2.5;
+
+          .reward-icon {
+            @apply w-4 h-4 sm:w-9 sm:h-9 bg-[#fff0ee] rounded-[10px]
+                               flex-center text-red;
+          }
+
+          p:first-child {
+            @apply text-[.6rem] sm:text-sm font-bold text-dark;
+          }
+          p:last-child {
+            @apply text-[.5rem] sm:text-[.7rem] text-gray-text;
+          }
+        }
+      }
+    }
+  }
+
+  /* ─── STATS ─── */
+  #stats {
+    @apply py-10 lg:py-16 max-w-350 mx-auto border-b border-border;
+
+    .stats-grid {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-2 md:grid-cols-4 gap-6 text-center;
+    }
+
+    .stat-item {
+      @apply flex flex-col items-center gap-2;
+
+      .stat-icon {
+        @apply text-3xl text-green;
+      }
+
+      strong {
+        @apply text-[2rem] lg:text-[2.4rem] font-bold text-dark;
+      }
+
+      p {
+        @apply text-base lg:text-lg text-gray-text;
+      }
+    }
+  }
+
+  /* ─── SOLUTION ─── */
+  #solution {
+    @apply py-16 lg:py-24 flex-center border-t-2 border-gray-100 bg-linear-to-b from-[#FFFFFF] to-bg-light;
+
+    .solution-inner {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16;
+    }
+
+    .solution-img {
+      @apply rounded-4xl overflow-hidden w-full lg:w-112.5 h-72 sm:h-96 lg:h-full;
+
+      img {
+        @apply w-full h-full object-cover;
+      }
+    }
+
+    .solution-text {
+      @apply flex flex-col gap-5 lg:gap-6;
+
+      h2 {
+        @apply text-[clamp(1.8rem,3.5vw,2.8rem)]
+                       font-bold leading-[1.2];
+      }
+
+      > p {
+        @apply text-lg lg:text-xl text-gray-text leading-[1.7];
+      }
+
+      .feature-list {
+        @apply flex flex-col gap-4;
+
+        .feature-item {
+          @apply flex items-start gap-3.5;
+
+          .icon-box {
+            @apply mt-0.5;
+          }
+
+          strong {
+            @apply block font-semibold text-dark mb-0.5;
+          }
+          span {
+            @apply text-sm text-gray-text;
+          }
+        }
+      }
+    }
+  }
+
+  /* ─── PARCOURS ─── */
+  #parcours {
+    @apply py-16 lg:py-24 max-w-350 mx-auto bg-white;
+ 
+    .parcours-header {
+      @apply text-center mb-10 lg:mb-16 px-4;
+ 
+      h2 {
+        @apply text-[clamp(1.8rem,3vw,2.6rem)] font-bold mb-3;
+      }
+      p {
+        @apply text-gray-text text-base;
+      }
+    }
+ 
+    /* Mobile: 2-col grid so steps pair up neatly.
+       Desktop (lg+): single flex row with connectors between steps. */
+    .steps-row {
+      @apply container mx-auto px-6
+             grid grid-cols-2 gap-x-4 gap-y-10
+             lg:flex lg:flex-row lg:justify-between lg:items-start lg:gap-2;
+ 
+      .step {
+        @apply relative flex flex-col items-center gap-3 text-center;
+ 
+        .step-icon-wrap {
+          @apply relative;
+ 
+          .step-icon {
+            @apply w-16 lg:w-18 h-16 lg:h-18 rounded-[18px]
+                   border-2 border-[#BBF7D0]
+                   flex-center text-[1.4rem] lg:text-[1.6rem] text-green;
+ 
+            &.red-step {
+              @apply border-[#FECACA] text-red;
+            }
+          }
+        }
+ 
+        .step-num {
+          @apply absolute -top-2 -right-2
+                 w-7 h-7 rounded-full
+                 flex-center text-white text-[.8rem] font-bold;
+ 
+          &.green { @apply bg-green; }
+          &.red   { @apply bg-red; }
+        }
+ 
+        strong {
+          @apply font-bold text-[.95rem] lg:text-[1.1rem] text-dark;
+        }
+        p {
+          @apply text-[.85rem] lg:text-[1rem] text-gray-text leading-normal px-1;
+        }
+      }
+ 
+      /* Connectors only on desktop */
+      .step-connector {
+        @apply hidden lg:block w-10 h-0.5 mt-9 shrink-0;
+      }
+    }
+  }
+
+  /* ─── BENEFITS ─── */
+  #benefits {
+    @apply py-16 lg:py-24 px-4 sm:px-6;
+    background: linear-gradient(135deg, #1a7a3c 0%, #27ae60 60%, #2ecc71 100%);
+
+    .benefits-header {
+      @apply text-center mb-10 lg:mb-14;
+
+      h2 {
+        @apply text-[clamp(1.8rem,3.5vw,2.8rem)]
+                       font-bold text-white mb-3;
+      }
+      p {
+        @apply text-white/80 text-base lg:text-xl
+                       max-w-200 mx-auto;
+      }
+    }
+
+    .benefits-cards {
+      @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5
+                   max-w-300 mx-auto;
+
+      .benefit-card {
+        @apply bg-white/12 backdrop-blur-sm
+                       border border-white/25
+                       rounded-2xl px-5 lg:px-7 py-7 lg:py-9 text-center
+                       transition-all duration-200
+                       hover:bg-white/18 hover:-translate-y-1;
+
+        .b-icon {
+          @apply w-12 lg:w-14 h-12 lg:h-14 bg-white/20 rounded-2xl
+                           flex-center text-xl lg:text-2xl mx-auto mb-4 lg:mb-5;
+        }
+
+        h3 {
+          @apply text-[1rem] lg:text-[1.1rem] font-semibold text-white mb-2;
+        }
+        p {
+          @apply text-[.95rem] lg:text-[1rem] text-white/80 leading-[1.6];
+        }
+      }
+    }
+  }
+
+  /* ─── BACKOFFICE ─── */
+  #backoffice {
+    @apply py-16 lg:py-24 w-full flex-center bg-linear-to-b from-[#FFFFFF] to-bg-light;
+
+    .backoffice-header {
+      @apply text-center mb-10 lg:mb-14
+                   container mx-auto px-4 sm:px-6;
+
+      h2 {
+        @apply text-[clamp(1.8rem,3vw,2.6rem)]
+                       font-bold mb-3 mt-3;
+      }
+      p {
+        @apply text-gray-text text-base lg:text-lg
+                       max-w-150 mx-auto;
+      }
+    }
+
+    .features-grid {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4;
+
+      .f-card {
+        @apply bg-white border border-border
+                       rounded-2xl p-5 lg:p-6
+                       flex flex-col gap-3.5
+                       shadow-sm hover:shadow-md transition-shadow;
+
+        h3 {
+          @apply font-bold text-[1rem] text-dark;
+        }
+        p {
+          @apply text-[.9rem] text-gray-text leading-[1.6];
+        }
+      }
+    }
+
+    .backoffice-cta {
+      @apply flex justify-center mt-8 lg:mt-10;
+    }
+  }
+
+  /* ─── SCALE ROW ─── */
+  #scale {
+    @apply py-10 lg:py-16 max-w-350 mx-auto;
+
+    .scale-row {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between items-center gap-6;
+
+      .scale-item {
+        @apply flex flex-col items-center gap-2 text-center;
+
+        strong {
+          @apply font-semibold text-[1rem] lg:text-[1.2rem] text-dark;
+        }
+        p {
+          @apply text-[.85rem] lg:text-[.9rem] text-gray-text;
+        }
+      }
+    }
+  }
+
+  /* ─── PRICING ─── */
+  #pricing {
+    @apply py-16 lg:py-24 flex-center bg-linear-to-b from-[#FFFFFF] to-bg-light;
+
+    .pricing-header {
+      @apply text-center mb-10 lg:mb-14 px-4;
+
+      h2 {
+        @apply text-[clamp(1.8rem,3vw,2.6rem)]
+                       font-bold mb-3;
+      }
+      p {
+        @apply text-gray-text text-base lg:text-lg;
+      }
+    }
+
+    .plans-grid {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-14 items-start;
+
+      .plan-card {
+        @apply bg-white h-auto lg:h-185 border-[1.5px] border-border
+                       rounded-4xl p-6 lg:p-8 relative shadow-sm;
+
+        &.featured {
+          @apply border-red shadow-[0_8px_32px_rgba(192,57,43,.15)];
+        }
+
+        .popular-badge {
+          @apply absolute -top-4 left-1/2 -translate-x-1/2
+                           bg-red text-white
+                           text-[.7rem] font-extrabold tracking-widest
+                           uppercase px-4.5 py-1.5 rounded-full whitespace-nowrap;
+        }
+
+        .plan-icon {
+          @apply mb-4 lg:mb-5;
+        }
+
+        h3 {
+          @apply text-[1.2rem] lg:text-[1.3rem] font-semibold mb-1;
+        }
+
+        .plan-type {
+          @apply text-[#16A34A] font-thin text-[1rem] mb-2.5;
+        }
+        .plan-desc {
+          @apply text-gray-text text-[.9rem] mb-4 lg:mb-5;
+        }
+        .plan-pricing {
+          @apply text-[.82rem] text-gray-text
+                           py-4 border-t border-b border-border mb-4;
+        }
+
+        .plan-features {
+          @apply flex flex-col gap-2.5 mb-6 lg:mb-7 list-none;
+
+          li {
+            @apply flex items-start text-[#475569] gap-2 text-base font-thin;
+
+            .check {
+              @apply text-green font-bold shrink-0;
+            }
+          }
+        }
+
+        .plan-btn {
+          @apply w-full py-3.25 rounded-[10px]
+                           font-semibold text-[.9rem] cursor-pointer
+                           border-[1.5px] border-border bg-transparent text-dark
+                           transition-colors
+                           hover:border-green hover:text-green;
+
+          &.primary {
+            @apply bg-red text-white border-red
+                               hover:bg-[#a93226] hover:border-[#a93226] hover:text-white;
+          }
+        }
+      }
+    }
+  }
+
+  /* ─── CATALOG ─── */
+  #catalog {
+    @apply py-16 lg:py-24 flex-center bg-bg-light;
+
+    .catalog-header {
+      @apply text-center mb-8 lg:mb-12 px-4;
+
+      h2 {
+        @apply text-[clamp(1.8rem,3vw,2.6rem)]
+                       font-bold mb-2.5;
+      }
+      p {
+        @apply text-gray-text text-base lg:text-xl;
+      }
+    }
+
+    .games-grid {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4;
+
+      .game-card {
+        @apply bg-white rounded-2xl overflow-hidden
+                       shadow-sm hover:shadow-md hover:-translate-y-0.5
+                       transition-all duration-200;
+
+        .game-img {
+          @apply relative h-52 sm:h-64 overflow-hidden;
+
+          img {
+            @apply w-full h-full object-cover;
+          }
+
+          .game-img-placeholder {
+            @apply w-full h-full flex-center text-4xl;
+            background: linear-gradient(135deg, #1a7a3c, #27ae60);
+          }
+
+          .game-badge {
+            @apply absolute -top-2 -right-2
+                               text-[.7rem] font-bold tracking-[.05em]
+                               uppercase px-4 pt-3 pb-1 rounded-full text-white;
+
+            &.star {
+              @apply bg-green;
+            }
+            &.soon {
+              @apply bg-[#475569];
+            }
+          }
+        }
+
+        .game-info {
+          @apply p-4;
+
+          h3 {
+            @apply font-semibold text-[1.1rem] lg:text-[1.2rem] mb-1.5;
+          }
+          p {
+            @apply text-[.95rem] lg:text-[1rem] text-gray-text mb-2.5 leading-normal;
+          }
+          a {
+            @apply text-[#16A34A] text-[1rem] font-semibold
+                               no-underline inline-flex items-center gap-1
+                               hover:underline;
+          }
+        }
+      }
+    }
+  }
+
+  /* ─── CTA BANNER ─── */
+  #cta-banner {
+    @apply py-16 lg:py-24 px-4 sm:px-6 text-center;
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+
+    h2 {
+      @apply text-[clamp(1.6rem,4vw,3rem)]
+                   font-bold text-white mb-3;
+    }
+    p {
+      @apply text-white/85 text-base lg:text-xl mb-7 lg:mb-9;
+    }
+
+    .cta-group {
+      @apply flex justify-center gap-3 flex-wrap;
+    }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    @apply py-16 pb-8 flex-center bg-bg-light border-t border-border;
+ 
+    .footer-grid {
+      @apply container mx-auto px-4 sm:px-6
+                   grid grid-cols-2 gap-8 lg:gap-12 mb-12;
+ 
+      /* Mobile: 2 cols — brand spans both, link cols side by side */
+      /* Desktop: 3 cols — 2fr brand | 1fr | 1fr */
+      @media (min-width: 1024px) {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+ 
+      .footer-brand {
+        @apply flex flex-col gap-3.5 col-span-2 lg:col-span-1;
+ 
+        .footer-logo {
+          @apply flex items-center gap-2.5 no-underline;
+ 
+          .footer-logo-icon {
+            @apply w-9 h-9 bg-green rounded-lg
+                               flex-center text-base;
+          }
+ 
+          span {
+            @apply text-[1.2rem] font-bold text-dark;
+ 
+            em {
+              @apply text-red not-italic;
+            }
+          }
+        }
+ 
+        p {
+          @apply text-base text-gray-text leading-[1.6];
+        }
+ 
+        .socials {
+          @apply flex gap-2;
+ 
+          .social-btn {
+            @apply w-9 h-9 rounded-[10px] bg-border text-gray-text
+                               flex-center text-sm cursor-pointer no-underline
+                               hover:bg-green-light hover:text-green transition-colors;
+          }
+        }
+      }
+ 
+      .footer-col {
+        h4 {
+          @apply font-extrabold text-[.95rem] mb-4 text-dark;
+        }
+ 
+        ul {
+          @apply list-none flex flex-col gap-2.5;
+ 
+          a {
+            @apply text-base text-gray-text no-underline
+                               hover:text-green transition-colors;
+          }
+        }
+      }
+    }
+ 
+    .footer-bottom {
+      @apply container mx-auto px-4 sm:px-6
+                   pt-6 border-t border-border
+                   flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 flex-wrap text-center sm:text-left;
+ 
+      p {
+        @apply text-[.8rem] text-gray-text;
+      }
+      a {
+        @apply text-green font-bold no-underline;
+      }
+    }
+ 
+    .cndp-badge {
+      @apply flex justify-center mt-5;
+ 
+      span {
+        @apply inline-flex items-center gap-2
+                       border-[1.5px] border-green-300 text-green
+                       text-[.82rem] font-semibold
+                       px-5 py-2 rounded-md;
+      }
+    }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  #hero .hero-left h1 {
+    animation: fadeUp 0.6s ease both;
+  }
+  #hero .hero-left .hero-desc {
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  #hero .hero-cta-group {
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  #hero .hero-trust {
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  #hero .hero-right {
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+}
