@@ -46,7 +46,7 @@ const Catalog = () => {
           </div>
         <div className="game-info">
           <h3>Pronostics</h3>
-          <p>Prédictions de matchs et classNameements.</p>
+          <p>Prédictions de matchs et classements.</p>
         </div>
       </div>
     </div>
