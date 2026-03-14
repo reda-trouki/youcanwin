@@ -1,6 +1,29 @@
 import { Facebook, Instagram, Linkedin, ShieldCheck, Trophy, X } from 'lucide-react'
+import SocialButton from './ui/SocialButton'
 
 const Footer = () => {
+
+  const socials = [
+    {link: "#", icon: <Facebook />},
+    {link: "#", icon: <X />},
+    {link: "#", icon: <Instagram />},
+    {link: "#", icon: <Linkedin />}
+  ]
+
+  const links =[
+    {link: "#solution", text: "Nos offres"},
+    {link: "#catalog", text: "Nos jeux"},
+    {link: "#pricing", text: "Album 2025"},
+    {link: "#backoffice", text: "À propos"},
+  ]
+
+  const contact = [
+    {link: "mailto:games@agency.africa ", text: "games@agency.africa"},
+    {link: "#",text:"Mentions légales"},
+    {link: "#",text:"Protection des données (CNDP) ↗"},
+    {link: "#",text:"Conditions d'utilisation"}
+  ]
+
   return (
     <footer>
   <div className="container">
@@ -13,30 +36,27 @@ const Footer = () => {
         </a>
         <p>Plateforme de jeux digitaux pour engager vos communautés autour du football. Un service d'Agency.Africa.</p>
         <div className="socials">
-          <a href="#" className="social-btn"><Facebook /></a>
-          <a href="#" className="social-btn"><X /></a>
-          <a href="#" className="social-btn"><Instagram /></a>
-          <a href="#" className="social-btn"><Linkedin /></a>
+          {socials.map(social => (
+            <SocialButton link={social.link} icon={social.icon} />
+          ))}
         </div>
       </div>
       {/* <!-- Links --> */}
       <div className="footer-col">
         <h4>Liens rapides</h4>
         <ul>
-          <li><a href="#solution">Nos offres</a></li>
-          <li><a href="#catalog">Nos jeux</a></li>
-          <li><a href="#pricing">Album 2025</a></li>
-          <li><a href="#backoffice">À propos</a></li>
+          {links.map((link) =>(
+            <li><a href={link.link}>{link.text}</a></li>
+          ))}
         </ul>
       </div>
       {/* <!-- Legal --> */}
       <div className="footer-col">
         <h4>Contact &amp; Légal</h4>
         <ul>
-          <li><a href="#">games@agency.africa</a></li>
-          <li><a href="#">Mentions légales</a></li>
-          <li><a href="#">Protection des données (CNDP) ↗</a></li>
-          <li><a href="#">Conditions d'utilisation</a></li>
+          {contact.map((link) =>(
+            <li><a href={link.link}>{link.text}</a></li>
+          ))}
         </ul>
       </div>
     </div>

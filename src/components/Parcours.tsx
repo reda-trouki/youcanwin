@@ -1,6 +1,7 @@
 import { Blocks, Folders, Gift, QrCode, ShoppingCart } from 'lucide-react'
 
 const Parcours = () => {
+
   return (
     <section id="parcours">
   <div className="container">
@@ -12,7 +13,6 @@ const Parcours = () => {
       <div className="step">
         <div className="step-icon-wrap">
           <div className="step-icon"><ShoppingCart /></div>
-          
         </div>
         <span className="step-num green">1</span>
         <strong>Achat produit</strong>
@@ -31,7 +31,6 @@ const Parcours = () => {
       <div className="step">
         <div className="step-icon-wrap">
           <div className="step-icon"><Folders /></div>
-          
         </div>
         <span className="step-num green">3</span>
         <strong>Déblocage carte</strong>
@@ -41,7 +40,6 @@ const Parcours = () => {
       <div className="step">
         <div className="step-icon-wrap">
           <div className="step-icon red-step"><Blocks /></div>
-          
         </div>
         <span className="step-num red">4</span>
         <strong>Collection</strong>
@@ -51,7 +49,6 @@ const Parcours = () => {
       <div className="step">
         <div className="step-icon-wrap">
           <div className="step-icon red-step"><Gift /></div>
-          
         </div>
         <span className="step-num red">5</span>
         <strong>Récompenses</strong>

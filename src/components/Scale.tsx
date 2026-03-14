@@ -1,35 +1,22 @@
 import { Cloud, Earth, Folders, QrCode, Users } from 'lucide-react'
+import ScaleItem from './ui/ScaleItem'
 
 const Scale = () => {
+
+  const items =[
+    {title: "Utilisateurs", desc: "De 1K à illimité" ,icon: <Users /> },
+    {title: "QR Codes", desc: "Volume adapté" ,icon: <QrCode /> },
+    {title: "Couverture", desc: "Local à mondial" ,icon: <Earth /> },
+    {title: "Albums", desc: "Standard ou custom",icon: <Folders /> },
+    {title: "Infrastructure" , desc: "Cloud ou On-Premise",icon: <Cloud /> },
+  ]
   return (
     <section id="scale">
   <div className="container">
     <div className="scale-row">
-      <div className="scale-item">
-        <div className="icon-box"><Users /></div>
-        <strong>Utilisateurs</strong>
-        <p>De 1K à illimité</p>
-      </div>
-      <div className="scale-item">
-        <div className="icon-box"><QrCode /></div>
-        <strong>QR Codes</strong>
-        <p>Volume adapté</p>
-      </div>
-      <div className="scale-item">
-        <div className="icon-box"><Earth /></div>
-        <strong>Couverture</strong>
-        <p>Local à mondial</p>
-      </div>
-      <div className="scale-item">
-        <div className="icon-box"><Folders /></div>
-        <strong>Albums</strong>
-        <p>Standard ou custom</p>
-      </div>
-      <div className="scale-item">
-        <div className="icon-box"><Cloud /></div>
-        <strong>Infrastructure</strong>
-        <p>Cloud ou On-Premise</p>
-      </div>
+      {items.map((item) =>(
+        <ScaleItem title={item.title} desc={item.desc} icon={item.icon} />
+      ))}
     </div>
   </div>
 </section>

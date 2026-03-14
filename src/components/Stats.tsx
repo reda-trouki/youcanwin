@@ -1,30 +1,20 @@
 import { ChartSpline, Star, Target, Users } from 'lucide-react'
+import Stat from './ui/Stat'
 
 const Stats = () => {
+  const stats = [
+    {title: "500K+" ,desc: "Interactions mensuelles" ,icon: <ChartSpline size={32} /> },
+    {title: "50+",desc: "Marques partenaires",icon: <Users size={32} />},
+    {title: "98%",desc: "Taux de satisfaction" ,icon: <Star size={32} /> },
+    {title: "24/7",desc: "Support technique",icon: <Target size={32} />},
+  ]
   return (
     <section id="stats">
   <div className="container">
     <div className="stats-grid">
-      <div className="stat-item">
-        <span className="stat-icon"><ChartSpline size={32} /></span>
-        <strong>500K+</strong>
-        <p>Interactions mensuelles</p>
-      </div>
-      <div className="stat-item">
-        <span className="stat-icon"><Users size={32} /></span>
-        <strong>50+</strong>
-        <p>Marques partenaires</p>
-      </div>
-      <div className="stat-item">
-        <span className="stat-icon"><Star size={32} /></span>
-        <strong>98%</strong>
-        <p>Taux de satisfaction</p>
-      </div>
-      <div className="stat-item">
-        <span className="stat-icon"><Target size={32} /></span>
-        <strong>24/7</strong>
-        <p>Support technique</p>
-      </div>
+      {stats.map(stat =>(
+        <Stat title={stat.title} desc={stat.desc} icon={stat.icon} />
+      ))}
     </div>
   </div>
 </section>

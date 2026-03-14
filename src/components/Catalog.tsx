@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react'
 
 const Catalog = () => {
+
   return (
     <section id="catalog">
   <div className="container">
